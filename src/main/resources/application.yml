@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/user_center
+    username: reallth
+    password: ....
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      database: 0
+  session:
+    timeout: 86400
+  # data format
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+server:
+  port: 8080
+  address: 0.0.0.0
+mybatis-plus:
+  # mybatis log config
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    # logic delete config
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+# knife4j config
+springdoc:
+  default-flat-param-object: true
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: ReAllTh ©[MIT LICENCE](https://choosealicense.com/licenses/mit/)
+    enable-swagger-models: true
+    swagger-model-name: Models
+  basic:
+    enable: true
+    username: admin
+    password: passwd
