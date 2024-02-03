@@ -71,12 +71,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * user delete
      *
-     * @param id      user delete data transfer object
-     * @param session session
+     * @param id user delete data transfer object
      * @return result
      */
     @Override
-    public boolean deleteById(String id, HttpSession session) {
+    public boolean deleteById(String id) {
         return false;
     }
 
@@ -84,11 +83,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * user find
      *
      * @param userFindDTO user find date transfer object
-     * @param session     session
      * @return target users list
      */
     @Override
-    public List<UserVO> find(UserFindDTO userFindDTO, HttpSession session) {
+    public List<UserVO> find(UserFindDTO userFindDTO) {
         return null;
     }
 

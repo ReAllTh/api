@@ -1,5 +1,6 @@
 package link.reallth.api.model.vo;
 
+import link.reallth.api.constant.enums.ROLES;
 import lombok.Data;
 
 import java.io.Serial;
@@ -18,7 +19,7 @@ public class UserVO implements Serializable {
     private String username;
     private String nickname;
     private String avatar;
-    private Integer role;
+    private ROLES role;
     private String accessKey;
     private String secretKey;
     private Date createTime;

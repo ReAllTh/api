@@ -2,6 +2,8 @@ package link.reallth.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpSession;
+import link.reallth.api.annotation.RequireRole;
+import link.reallth.api.constant.enums.ROLES;
 import link.reallth.api.model.dto.UserFindDTO;
 import link.reallth.api.model.dto.UserSignInDTO;
 import link.reallth.api.model.dto.UserSignUpDTO;
@@ -53,20 +55,20 @@ public interface UserService extends IService<User> {
     /**
      * user delete
      *
-     * @param id      user delete data transfer object
-     * @param session session
+     * @param id user delete data transfer object
      * @return result
      */
-    boolean deleteById(String id, HttpSession session);
+    @RequireRole(role = ROLES.ADMIN)
+    boolean deleteById(String id);
 
     /**
      * user find
      *
      * @param userFindDTO user find date transfer object
-     * @param session     session
      * @return target users list
      */
-    List<UserVO> find(UserFindDTO userFindDTO, HttpSession session);
+    @RequireRole
+    List<UserVO> find(UserFindDTO userFindDTO);
 
     /**
      * user update
@@ -75,5 +77,6 @@ public interface UserService extends IService<User> {
      * @param session       session
      * @return target user view object
      */
+    @RequireRole
     UserVO update(UserUpdateDTO userUpdateDTO, HttpSession session);
 }
