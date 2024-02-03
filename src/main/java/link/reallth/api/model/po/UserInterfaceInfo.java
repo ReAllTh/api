@@ -1,5 +1,6 @@
 package link.reallth.api.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -15,20 +16,10 @@ import java.util.Date;
 @TableName(value = "user_interface_info")
 @Data
 public class UserInterfaceInfo implements Serializable {
-    /**
-     *
-     */
-    @TableId
+
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
-
-    /**
-     *
-     */
     private String userId;
-
-    /**
-     *
-     */
     private String interfaceinfoId;
 
     /**
@@ -45,20 +36,8 @@ public class UserInterfaceInfo implements Serializable {
      * status: - 0 working - 1 ban
      */
     private Integer status;
-
-    /**
-     *
-     */
     private Date createTime;
-
-    /**
-     *
-     */
     private Date updateTime;
-
-    /**
-     *
-     */
     private Integer deleted;
 
     @Serial

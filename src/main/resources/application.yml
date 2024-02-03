@@ -39,7 +39,7 @@ knife4j:
     language: zh_cn
     enable-footer: false
     enable-footer-custom: true
-    footer-custom-content: ReAllTh ©[MIT LICENCE](https://choosealicense.com/licenses/mit/)
+    footer-custom-content: ReAllTh [MIT LICENCE](https://choosealicense.com/licenses/mit/)
     enable-swagger-models: true
     swagger-model-name: Models
   basic:

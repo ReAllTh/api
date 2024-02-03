@@ -18,7 +18,7 @@ public class MybatisPlusConfig {
 
     /**
      * mybatis plus page plugin
-     * should be config last
+     * should be configured last
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

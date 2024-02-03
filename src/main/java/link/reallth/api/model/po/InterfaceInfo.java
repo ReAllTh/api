@@ -1,5 +1,6 @@
 package link.reallth.api.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -17,70 +18,24 @@ import java.util.Date;
 @TableName(value = "interface_info")
 @Data
 public class InterfaceInfo implements Serializable {
-    /**
-     *
-     */
-    @TableId
+
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
-
-    /**
-     *
-     */
     private String name;
-
-    /**
-     *
-     */
     private String description;
-
-    /**
-     *
-     */
     private String url;
-
-    /**
-     *
-     */
     private String requestParams;
-
-    /**
-     *
-     */
     private String requestHeader;
-
-    /**
-     *
-     */
     private String responseHeader;
 
     /**
      * status: - 0 close - 1 open
      */
     private Integer status;
-
-    /**
-     *
-     */
     private String method;
-
-    /**
-     * creator id
-     */
     private String creatorId;
-
-    /**
-     *
-     */
     private Date createTime;
-
-    /**
-     *
-     */
     private Date updateTime;
-
-    /**
-     *
-     */
     private Integer deleted;
 
     @Serial

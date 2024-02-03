@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 全局业务异常处理器
+ * global exception handler
  *
  * @author ReAllTh
  */
