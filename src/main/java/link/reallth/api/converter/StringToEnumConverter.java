@@ -34,7 +34,7 @@ public class StringToEnumConverter<T extends Convertable> implements Converter<S
     @Override
     public T convert(@Nonnull String source) {
         if (!enumMap.containsKey(source))
-            throw new BaseException(CODES.PARAM_ERR, "invalid " + targetTypeNam);
+            throw new BaseException(CODES.ERROR_PARAM, "invalid " + targetTypeNam);
         return enumMap.get(source);
     }
 }

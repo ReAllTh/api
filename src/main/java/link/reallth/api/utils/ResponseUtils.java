@@ -63,7 +63,7 @@ public class ResponseUtils {
      * @return base response with error info
      */
     public static <T> BaseResponse<T> nullPointerError(NullPointerException e) {
-        CODES codes = CODES.SYSTEM_ERR;
+        CODES codes = CODES.ERROR_SYSTEM;
         int code = codes.getCode();
         String msg = codes.getMsg();
         String description = rootCauseMessage(e);

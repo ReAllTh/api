@@ -2,14 +2,20 @@ package link.reallth.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import link.reallth.api.annotation.RequireRole;
 import link.reallth.api.constant.enums.ROLES;
+import link.reallth.api.converter.IntegerToEnumConverter;
 import link.reallth.api.model.dto.UserFindDTO;
 import link.reallth.api.model.dto.UserSignInDTO;
 import link.reallth.api.model.dto.UserSignUpDTO;
 import link.reallth.api.model.dto.UserUpdateDTO;
 import link.reallth.api.model.po.User;
 import link.reallth.api.model.vo.UserVO;
+import org.springframework.beans.BeanUtils;
+import org.springframework.boot.SpringApplication;
+import org.springframework.web.context.ContextLoader;
 
 import java.util.List;
 
@@ -27,7 +33,7 @@ public interface UserService extends IService<User> {
      * @param session       session
      * @return new user
      */
-    UserVO signUp(UserSignUpDTO userSignUpDTO, HttpSession session);
+    UserVO signUp(@Valid UserSignUpDTO userSignUpDTO, HttpSession session);
 
     /**
      * user sign in
@@ -36,7 +42,7 @@ public interface UserService extends IService<User> {
      * @param session       session
      * @return new user
      */
-    UserVO signIn(UserSignInDTO userSignInDTO, HttpSession session);
+    UserVO signIn(@Valid UserSignInDTO userSignInDTO, HttpSession session);
 
     /**
      * return current user
@@ -59,7 +65,7 @@ public interface UserService extends IService<User> {
      * @return result
      */
     @RequireRole(role = ROLES.ADMIN)
-    boolean deleteById(String id);
+    boolean deleteById(@NotBlank String id);
 
     /**
      * user find
@@ -68,7 +74,7 @@ public interface UserService extends IService<User> {
      * @return target users list
      */
     @RequireRole
-    List<UserVO> find(UserFindDTO userFindDTO);
+    List<UserVO> find(@Valid UserFindDTO userFindDTO);
 
     /**
      * user update
@@ -78,5 +84,12 @@ public interface UserService extends IService<User> {
      * @return target user view object
      */
     @RequireRole
-    UserVO update(UserUpdateDTO userUpdateDTO, HttpSession session);
+    UserVO update(@Valid UserUpdateDTO userUpdateDTO, HttpSession session);
+
+    static UserVO getUserVO(User user) {
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(user, userVO, "role");
+        userVO.setRole(new IntegerToEnumConverter<>(ROLES.class).convert(user.getRole()));
+        return userVO;
+    }
 }

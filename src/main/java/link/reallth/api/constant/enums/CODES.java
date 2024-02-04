@@ -16,16 +16,16 @@ public enum CODES {
     ERROR(-1, "undefined error"),
 
     // permission err - 10000
-    PERMISSION_ERR(10001, "permission error"),
+    ERROR_PERMISSION(10001, "permission error"),
 
     // param err - 20000
-    PARAM_ERR(20001, "parameters error"),
+    ERROR_PARAM(20001, "parameters error"),
 
     // business err - 40000
-    BUSINESS_ERR(40001, "business error"),
+    ERROR_BUSINESS(40001, "business error"),
 
     // system err - 50000
-    SYSTEM_ERR(50001, "system error");
+    ERROR_SYSTEM(50001, "system error");
 
     private final int code;
     private final String msg;

@@ -1,7 +1,10 @@
 package link.reallth.api.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.servlet.http.HttpSession;
+import link.reallth.api.constant.enums.CODES;
+import link.reallth.api.exception.BaseException;
 import link.reallth.api.mapper.UserMapper;
 import link.reallth.api.model.dto.UserFindDTO;
 import link.reallth.api.model.dto.UserSignInDTO;
@@ -10,9 +13,14 @@ import link.reallth.api.model.dto.UserUpdateDTO;
 import link.reallth.api.model.po.User;
 import link.reallth.api.model.vo.UserVO;
 import link.reallth.api.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+
+import static link.reallth.api.constant.AttributeConst.ATTR_CURRENT_USER;
 
 /**
  * UserServiceImpl
@@ -23,6 +31,10 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 
+    public static final String COLUMN_USERNAME = "username";
+    public static final String INVALID_MSG_DUP_USERNAME = "username already exist";
+    public static final String ERROR_MSG_DATABASE = "failed on database";
+
     /**
      * user sign up
      *
@@ -32,7 +44,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public UserVO signUp(UserSignUpDTO userSignUpDTO, HttpSession session) {
-        return null;
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        // check username exist
+        String username = userSignUpDTO.getUsername();
+        if (this.exists(qw.eq(COLUMN_USERNAME, username)))
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_DUP_USERNAME);
+        // generate new user
+        User newUser = new User();
+        BeanUtils.copyProperties(userSignUpDTO, newUser);
+        // digest password
+        newUser.setPassword(DigestUtils.md5DigestAsHex(newUser.getPassword().getBytes(StandardCharsets.UTF_8)));
+        // save
+        if (!this.save(newUser))
+            throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
+        UserVO userVO = UserService.getUserVO(this.getById(newUser));
+        session.setAttribute(ATTR_CURRENT_USER, userVO);
+        return userVO;
     }
 
     /**
