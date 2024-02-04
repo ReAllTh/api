@@ -12,6 +12,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import static link.reallth.api.constant.AttributeConst.ATTR_CURRENT_USER;
+import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQATTR;
 
 /**
  * authentication validator
@@ -22,7 +23,6 @@ public class AuthValidator implements ConstraintValidator<RequireRole, UserVO> {
     private ROLES requiredRole;
     private static final String INVALID_MSG_SIGNEDINN = "need to be signed in";
     private static final String INVALID_MSG_ROLE = "need to be admin";
-    private static final String INVALID_MSG_REQATTR = "con not get RequestAttributes";
 
     @Override
     public void initialize(RequireRole requireRole) {

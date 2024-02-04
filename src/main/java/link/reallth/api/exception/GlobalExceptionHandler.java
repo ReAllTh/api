@@ -1,8 +1,11 @@
 package link.reallth.api.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import link.reallth.api.common.BaseResponse;
 import link.reallth.api.utils.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -40,6 +43,42 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * generate a BindException response with info
+     *
+     * @param e   BindException
+     * @param <T> T
+     * @return base response with error info
+     */
+    @ExceptionHandler(BindException.class)
+    public <T> BaseResponse<T> baseExceptionHandler(BindException e) {
+        return ResponseUtils.getObjValidateError(e);
+    }
+
+    /**
+     * generate a MethodArgumentNotValidException response with info
+     *
+     * @param e   MethodArgumentNotValidException
+     * @param <T> T
+     * @return base response with error info
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public <T> BaseResponse<T> baseExceptionHandler(MethodArgumentNotValidException e) {
+        return ResponseUtils.postBodyValidateError(e);
+    }
+
+    /**
+     * generate a ConstraintViolationException response with info
+     *
+     * @param e   ConstraintViolationException
+     * @param <T> T
+     * @return base response with error info
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public <T> BaseResponse<T> baseExceptionHandler(ConstraintViolationException e) {
+        return ResponseUtils.getParamValidateError(e);
+    }
+
+    /**
      * generate an Exception response with info
      *
      * @param e   Exception
@@ -50,4 +89,5 @@ public class GlobalExceptionHandler {
     public <T> BaseResponse<T> baseExceptionHandler(Exception e) {
         return ResponseUtils.error(e);
     }
+
 }

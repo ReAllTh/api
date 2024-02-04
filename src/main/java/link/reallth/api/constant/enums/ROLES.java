@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ROLES implements Convertable {
+public enum ROLES {
     DEFAULT(0),
     ADMIN(1);
 

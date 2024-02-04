@@ -22,8 +22,8 @@ server:
   address: 0.0.0.0
 mybatis-plus:
   # mybatis log config
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     # logic delete config
     db-config:

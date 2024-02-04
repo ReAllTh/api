@@ -6,6 +6,8 @@ package link.reallth.api.constant;
  * @author ReAllTh
  */
 public class ValidateConst {
+    public static final String INVALID_MSG_ROLE = "invalid role";
+
     private ValidateConst() {
     }
 
