@@ -39,15 +39,16 @@ import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQATTR;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
-    public static final String INVALID_MSG_NO_USER = "no such user";
-    public static final String INVALID_MSG_PASSWORD = "username or password mismatched";
     @Resource
     private ConversionService converter;
     public static final String SALT = "salt";
+    public static final String COLUMN_ID = "id";
     public static final String COLUMN_USERNAME = "username";
     public static final String INVALID_MSG_DUP_USERNAME = "username already exist";
     public static final String ERROR_MSG_DATABASE = "failed on database";
-    public static final String INVALID_MSG_SIGNEDIN = "already signed in";
+    public static final String INVALID_MSG_SIGNED_IN = "already signed in";
+    public static final String INVALID_MSG_NO_USER = "no such user";
+    public static final String INVALID_MSG_PASSWORD = "username or password mismatched";
 
     /**
      * user sign up
@@ -92,14 +93,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public UserVO signIn(UserSignInDTO userSignInDTO) {
         // check if already signed in
         if (this.currentUser() != null)
-            throw new BaseException(CODES.ERROR_BUSINESS, INVALID_MSG_SIGNEDIN);
+            throw new BaseException(CODES.ERROR_BUSINESS, INVALID_MSG_SIGNED_IN);
         // get target user
         QueryWrapper<User> qw = new QueryWrapper<>();
         User targetUser = this.getOne(qw.eq(COLUMN_USERNAME, userSignInDTO.getUsername()));
         if (targetUser == null)
             throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
         // check password
-        String toBeDigest = SALT + userSignInDTO.getPassword();
+        String toBeDigest = userSignInDTO.getPassword() + SALT;
         String digested = DigestUtils.md5DigestAsHex(toBeDigest.getBytes(StandardCharsets.UTF_8));
         if (!digested.equals(targetUser.getPassword()))
             throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_PASSWORD);
@@ -135,7 +136,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public boolean deleteById(String id) {
-        return false;
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        // check user exist
+        if (!this.exists(qw.eq(COLUMN_ID, id)))
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
+        // delete
+        if (!this.removeById(id))
+            throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
+        return true;
     }
 
     /**

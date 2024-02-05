@@ -83,4 +83,16 @@ public class UserController {
         userService.signOut();
         return ResponseUtils.success();
     }
+
+    /**
+     * user delete
+     *
+     * @param id target user id
+     * @return result
+     */
+    @PostMapping("delete")
+    public BaseResponse<Boolean> delete(String id) {
+        boolean result = userService.deleteById(id);
+        return ResponseUtils.success(result);
+    }
 }
