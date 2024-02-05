@@ -34,17 +34,16 @@ public interface UserService extends IService<User> {
      * user sign in
      *
      * @param userSignInDTO sign in data transfer object
-     * @param session       session
      * @return new user
      */
-    UserVO signIn(@Valid UserSignInDTO userSignInDTO, HttpSession session);
+    UserVO signIn(@Valid UserSignInDTO userSignInDTO);
 
     /**
      * return current user
      *
      * @return current user
      */
-    UserVO currentUser(HttpSession session);
+    UserVO currentUser();
 
     /**
      * user sign out

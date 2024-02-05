@@ -39,12 +39,15 @@ import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQATTR;
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
+    public static final String INVALID_MSG_NO_USER = "no such user";
+    public static final String INVALID_MSG_PASSWORD = "username or password mismatched";
     @Resource
     private ConversionService converter;
+    public static final String SALT = "salt";
     public static final String COLUMN_USERNAME = "username";
     public static final String INVALID_MSG_DUP_USERNAME = "username already exist";
     public static final String ERROR_MSG_DATABASE = "failed on database";
-    public static final String SALT = "salt";
+    public static final String INVALID_MSG_SIGNEDIN = "already signed in";
 
     /**
      * user sign up
@@ -74,11 +77,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (!this.save(newUser))
             throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
         // keep signed in
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null)
-            throw new BaseException(CODES.ERROR_SYSTEM, INVALID_MSG_REQATTR);
         UserVO userVO = this.getUserVO(this.getById(newUser));
-        requestAttributes.setAttribute(ATTR_CURRENT_USER, userVO, RequestAttributes.SCOPE_SESSION);
+        this.getRequestAttributes().setAttribute(ATTR_CURRENT_USER, userVO, RequestAttributes.SCOPE_SESSION);
         return userVO;
     }
 
@@ -86,23 +86,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * user sign in
      *
      * @param userSignInDTO sign in data transfer object
-     * @param session       session
      * @return new user
      */
     @Override
-    public UserVO signIn(UserSignInDTO userSignInDTO, HttpSession session) {
-        return null;
+    public UserVO signIn(UserSignInDTO userSignInDTO) {
+        // check if already signed in
+        if (this.currentUser() != null)
+            throw new BaseException(CODES.ERROR_BUSINESS, INVALID_MSG_SIGNEDIN);
+        // get target user
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        User targetUser = this.getOne(qw.eq(COLUMN_USERNAME, userSignInDTO.getUsername()));
+        if (targetUser == null)
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
+        // check password
+        String toBeDigest = SALT + userSignInDTO.getPassword();
+        String digested = DigestUtils.md5DigestAsHex(toBeDigest.getBytes(StandardCharsets.UTF_8));
+        if (!digested.equals(targetUser.getPassword()))
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_PASSWORD);
+        // keep signed in
+        UserVO userVO = this.getUserVO(targetUser);
+        this.getRequestAttributes().setAttribute(ATTR_CURRENT_USER, userVO, RequestAttributes.SCOPE_SESSION);
+        return userVO;
     }
 
     /**
      * return current user
      *
-     * @param session
      * @return current user
      */
     @Override
-    public UserVO currentUser(HttpSession session) {
-        return null;
+    public UserVO currentUser() {
+        return (UserVO) this.getRequestAttributes().getAttribute(ATTR_CURRENT_USER, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
@@ -112,7 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public void signOut(HttpSession session) {
-
+        this.getRequestAttributes().removeAttribute(ATTR_CURRENT_USER, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
@@ -151,9 +165,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     private UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO, "role");
+        BeanUtils.copyProperties(user, userVO);
         userVO.setRole(converter.convert(user.getRole(), ROLES.class));
         return userVO;
+    }
+
+    private RequestAttributes getRequestAttributes() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null)
+            throw new BaseException(CODES.ERROR_SYSTEM, INVALID_MSG_REQATTR);
+        return requestAttributes;
     }
 }
 
