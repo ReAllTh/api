@@ -121,11 +121,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     /**
      * user sign out
-     *
-     * @param session session
      */
     @Override
-    public void signOut(HttpSession session) {
+    public void signOut() {
         this.getRequestAttributes().removeAttribute(ATTR_CURRENT_USER, RequestAttributes.SCOPE_SESSION);
     }
 

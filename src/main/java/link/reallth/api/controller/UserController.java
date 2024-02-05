@@ -5,12 +5,15 @@ import jakarta.validation.Valid;
 import link.reallth.api.common.BaseResponse;
 import link.reallth.api.constant.enums.CODES;
 import link.reallth.api.exception.BaseException;
+import link.reallth.api.model.dto.UserSignInDTO;
 import link.reallth.api.model.dto.UserSignUpDTO;
+import link.reallth.api.model.ro.UserSignInRO;
 import link.reallth.api.model.ro.UserSignUpRO;
 import link.reallth.api.model.vo.UserVO;
 import link.reallth.api.service.UserService;
 import link.reallth.api.utils.ResponseUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +44,43 @@ public class UserController {
         BeanUtils.copyProperties(userSignUpRO, userSignUpDTO);
         UserVO userVO = userService.signUp(userSignUpDTO);
         return ResponseUtils.success(userVO);
+    }
+
+    /**
+     * user sign in
+     *
+     * @param userSignInRO user sign in request object
+     * @return target user
+     */
+    @PostMapping("signIn")
+    public BaseResponse<UserVO> signIn(UserSignInRO userSignInRO) {
+        if (userSignInRO == null)
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NULL_POST_BODY);
+        UserSignInDTO userSignInDTO = new UserSignInDTO();
+        BeanUtils.copyProperties(userSignInRO, userSignInDTO);
+        UserVO userVO = userService.signIn(userSignInDTO);
+        return ResponseUtils.success(userVO);
+    }
+
+    /**
+     * return current user
+     *
+     * @return current
+     */
+    @GetMapping("current")
+    public BaseResponse<UserVO> current() {
+        UserVO currentUser = userService.currentUser();
+        return ResponseUtils.success(currentUser);
+    }
+
+    /**
+     * user sign out
+     *
+     * @return null
+     */
+    @PostMapping("signOut")
+    public BaseResponse<Void> signOut() {
+        userService.signOut();
+        return ResponseUtils.success();
     }
 }

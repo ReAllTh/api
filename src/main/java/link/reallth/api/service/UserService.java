@@ -47,10 +47,8 @@ public interface UserService extends IService<User> {
 
     /**
      * user sign out
-     *
-     * @param session session
      */
-    void signOut(HttpSession session);
+    void signOut();
 
     /**
      * user delete
