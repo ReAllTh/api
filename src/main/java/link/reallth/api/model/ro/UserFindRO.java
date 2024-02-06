@@ -1,4 +1,4 @@
-package link.reallth.api.model.dto;
+package link.reallth.api.model.ro;
 
 import jakarta.validation.constraints.*;
 import link.reallth.api.constant.enums.ROLES;
@@ -10,12 +10,12 @@ import java.util.Date;
 import static link.reallth.api.constant.ValidateConst.*;
 
 /**
- * user find data transfer object
+ * user find request object
  *
  * @author ReAllTh
  */
 @Data
-public class UserFindDTO {
+public class UserFindRO {
 
     @Length(min = 32, max = 32, message = INVALID_MSG_ID)
     private String id;

@@ -16,13 +16,14 @@ import static link.reallth.api.constant.ValidateConst.*;
 @Data
 public class UserSignUpRO {
 
+    @NotBlank(message = INVALID_MSG_USERNAME_BLANK)
     @Pattern(regexp = REGEX_USERNAME, message = INVALID_MSG_USERNAME)
     private String username;
 
-    @NotBlank
     @Length(min = 2, max = 16)
     private String nickname;
 
+    @NotBlank(message = INVALID_MSG_PASSWORD_BLANK)
     @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_PASSWORD)
     private String password;
 

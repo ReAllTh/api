@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
  */
 public class ResponseUtils {
 
-    private ResponseUtils() {
-    }
-
     /**
      * generate a success response without data
      *
@@ -147,5 +144,8 @@ public class ResponseUtils {
         while (throwable.getCause() != null)
             throwable = throwable.getCause();
         return throwable.getMessage();
+    }
+
+    private ResponseUtils() {
     }
 }

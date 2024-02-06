@@ -1,25 +1,29 @@
 package link.reallth.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import link.reallth.api.annotation.RequireRole;
-import link.reallth.api.constant.enums.ROLES;
 import link.reallth.api.model.dto.UserFindDTO;
 import link.reallth.api.model.dto.UserSignInDTO;
 import link.reallth.api.model.dto.UserSignUpDTO;
 import link.reallth.api.model.dto.UserUpdateDTO;
 import link.reallth.api.model.po.User;
 import link.reallth.api.model.vo.UserVO;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+
+import static link.reallth.api.constant.ValidateConst.INVALID_MSG_ID;
 
 /**
  * UserService
  *
  * @author ReAllTh
  */
+@Validated
 public interface UserService extends IService<User> {
 
     /**
@@ -28,7 +32,7 @@ public interface UserService extends IService<User> {
      * @param userSignUpDTO sign up info data transfer object
      * @return new user
      */
-    UserVO signUp(@Valid UserSignUpDTO userSignUpDTO);
+    UserVO signUp(@Valid @NotNull UserSignUpDTO userSignUpDTO);
 
     /**
      * user sign in
@@ -36,7 +40,7 @@ public interface UserService extends IService<User> {
      * @param userSignInDTO sign in data transfer object
      * @return new user
      */
-    UserVO signIn(@Valid UserSignInDTO userSignInDTO);
+    UserVO signIn(@Valid @NotNull UserSignInDTO userSignInDTO);
 
     /**
      * return current user
@@ -56,8 +60,7 @@ public interface UserService extends IService<User> {
      * @param id user delete data transfer object
      * @return result
      */
-    @RequireRole(role = ROLES.ADMIN)
-    boolean deleteById(@NotBlank String id);
+    boolean deleteById(@NotBlank @Length(min = 32, max = 32, message = INVALID_MSG_ID) String id);
 
     /**
      * user find
@@ -65,16 +68,14 @@ public interface UserService extends IService<User> {
      * @param userFindDTO user find date transfer object
      * @return target users list
      */
-    @RequireRole
-    List<UserVO> find(@Valid UserFindDTO userFindDTO);
+    List<UserVO> find(@Valid @NotNull UserFindDTO userFindDTO);
 
     /**
      * user update
      *
      * @param userUpdateDTO user update data transfer object
-     * @param session       session
      * @return target user view object
      */
     @RequireRole
-    UserVO update(@Valid UserUpdateDTO userUpdateDTO, HttpSession session);
+    UserVO update(@Valid @NotNull UserUpdateDTO userUpdateDTO);
 }

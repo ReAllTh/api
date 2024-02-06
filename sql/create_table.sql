@@ -17,9 +17,7 @@ create table if not exists user
     secret_key  varchar(512)                       not null,
     create_time datetime default CURRENT_TIMESTAMP not null,
     update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    deleted     tinyint  default 0                 not null,
-    constraint uni_username
-        unique (username)
+    deleted     tinyint  default 0                 not null
 ) comment 'user';
 
 -- interface info table
