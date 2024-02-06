@@ -6,15 +6,15 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * role enum
+ * interface status
  *
  * @author ReAllTh
  */
 @Getter
 @AllArgsConstructor
-public enum ROLES implements ConvertableEnum {
-    DEFAULT(0),
-    ADMIN(1);
+public enum STATUS implements ConvertableEnum {
+    CLOSE(0),
+    OPEN(1);
 
     private final Integer val;
 
