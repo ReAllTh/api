@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import link.reallth.api.annotation.RequireRole;
+import link.reallth.api.constant.enums.ROLES;
 import link.reallth.api.model.dto.UserFindDTO;
 import link.reallth.api.model.dto.UserSignInDTO;
 import link.reallth.api.model.dto.UserSignUpDTO;
@@ -76,6 +77,5 @@ public interface UserService extends IService<User> {
      * @param userUpdateDTO user update data transfer object
      * @return target user view object
      */
-    @RequireRole
     UserVO update(@Valid @NotNull UserUpdateDTO userUpdateDTO);
 }

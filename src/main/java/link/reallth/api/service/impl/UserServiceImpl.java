@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
+import link.reallth.api.annotation.RequireRole;
 import link.reallth.api.constant.enums.CODES;
 import link.reallth.api.constant.enums.ROLES;
 import link.reallth.api.exception.BaseException;
@@ -30,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import static link.reallth.api.constant.AttributeConst.ATTR_CURRENT_USER;
-import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQATTR;
+import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQ_ATTR;
 
 /**
  * UserServiceImpl
@@ -120,6 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return current user
      */
     @Override
+    @RequireRole
     public UserVO currentUser() {
         return (UserVO) this.getRequestAttributes().getAttribute(ATTR_CURRENT_USER, RequestAttributes.SCOPE_SESSION);
     }
@@ -127,7 +129,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * user sign out
      */
+
     @Override
+    @RequireRole
     public void signOut() {
         this.getRequestAttributes().removeAttribute(ATTR_CURRENT_USER, RequestAttributes.SCOPE_SESSION);
     }
@@ -138,7 +142,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @param id user delete data transfer object
      * @return result
      */
+
     @Override
+    @RequireRole(role = ROLES.ADMIN)
     public boolean deleteById(String id) {
         QueryWrapper<User> qw = new QueryWrapper<>();
         // check user exist
@@ -157,6 +163,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return target users list
      */
     @Override
+    @RequireRole
     public List<UserVO> find(UserFindDTO userFindDTO) {
         // check if id supplied
         String id = userFindDTO.getId();
@@ -195,6 +202,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return target user view object
      */
     @Override
+    @RequireRole
     public UserVO update(UserUpdateDTO userUpdateDTO) {
         // if target user exist
         if (this.getById(userUpdateDTO.getId()) == null)
@@ -231,7 +239,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private RequestAttributes getRequestAttributes() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null)
-            throw new BaseException(CODES.ERROR_SYSTEM, INVALID_MSG_REQATTR);
+            throw new BaseException(CODES.ERROR_SYSTEM, INVALID_MSG_REQ_ATTR);
         return requestAttributes;
     }
 }
