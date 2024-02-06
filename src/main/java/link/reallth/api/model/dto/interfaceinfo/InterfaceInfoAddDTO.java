@@ -1,4 +1,4 @@
-package link.reallth.api.model.ro.interfaceinfo;
+package link.reallth.api.model.dto.interfaceinfo;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -11,13 +11,8 @@ import org.hibernate.validator.constraints.URL;
 
 import static link.reallth.api.constant.ValidateConst.*;
 
-/**
- * interface info add request object
- *
- * @author ReAllTh
- */
 @Data
-public class InterfaceInfoAddRO {
+public class InterfaceInfoAddDTO {
 
     @NotBlank
     @Pattern(regexp = REGEX_INTERFACE_NAME, message = INVALID_MSG_INTERFACE_NAME)

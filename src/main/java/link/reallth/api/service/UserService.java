@@ -69,4 +69,5 @@ public interface UserService extends IService<User> {
      * @return target user view object
      */
     UserVO update(@Valid @NotNull UserUpdateDTO userUpdateDTO);
+
 }

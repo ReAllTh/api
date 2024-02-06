@@ -1,5 +1,7 @@
 package link.reallth.api.model.vo;
 
+import link.reallth.api.constant.enums.METHOD;
+import link.reallth.api.constant.enums.STATUS;
 import lombok.Data;
 
 import java.io.Serial;
@@ -8,6 +10,7 @@ import java.util.Date;
 
 @Data
 public class InterfaceInfoVO implements Serializable {
+
     private String id;
     private String name;
     private String description;
@@ -15,12 +18,8 @@ public class InterfaceInfoVO implements Serializable {
     private String requestParams;
     private String requestHeader;
     private String responseHeader;
-
-    /**
-     * status: - 0 close - 1 open
-     */
-    private Integer status;
-    private String method;
+    private STATUS status;
+    private METHOD method;
     private UserVO creator;
     private Date createTime;
 

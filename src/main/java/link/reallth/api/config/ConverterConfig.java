@@ -1,9 +1,9 @@
 package link.reallth.api.config;
 
 import jakarta.annotation.Resource;
-import link.reallth.api.converter.IntegerToEnumConverter;
+import link.reallth.api.converter.IntegerToEnumConverterFactory;
 import link.reallth.api.converter.StringToDateConverter;
-import link.reallth.api.converter.StringToEnumConverter;
+import link.reallth.api.converter.StringToEnumConverterFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,16 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ConverterConfig implements WebMvcConfigurer {
     @Resource
-    private IntegerToEnumConverter integerToEnumConverter;
+    private IntegerToEnumConverterFactory integerToEnumConverterFactory;
     @Resource
-    private StringToEnumConverter stringToEnumConverter;
+    private StringToEnumConverterFactory stringToEnumConverterFactory;
     @Resource
     private StringToDateConverter stringToDateConverter;
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(integerToEnumConverter);
-        registry.addConverter(stringToEnumConverter);
+        registry.addConverterFactory(integerToEnumConverterFactory);
+        registry.addConverterFactory(stringToEnumConverterFactory);
         registry.addConverter(stringToDateConverter);
     }
 }
