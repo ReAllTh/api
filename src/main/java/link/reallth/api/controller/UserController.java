@@ -3,14 +3,8 @@ package link.reallth.api.controller;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import link.reallth.api.common.BaseResponse;
-import link.reallth.api.model.dto.UserFindDTO;
-import link.reallth.api.model.dto.UserSignInDTO;
-import link.reallth.api.model.dto.UserSignUpDTO;
-import link.reallth.api.model.dto.UserUpdateDTO;
-import link.reallth.api.model.ro.UserFindRO;
-import link.reallth.api.model.ro.UserSignInRO;
-import link.reallth.api.model.ro.UserSignUpRO;
-import link.reallth.api.model.ro.UserUpdateRO;
+import link.reallth.api.model.dto.user.*;
+import link.reallth.api.model.ro.user.*;
 import link.reallth.api.model.vo.UserVO;
 import link.reallth.api.service.UserService;
 import link.reallth.api.utils.ResponseUtils;
@@ -92,8 +86,10 @@ public class UserController {
      * @return result
      */
     @PostMapping("delete")
-    public BaseResponse<Boolean> delete(String id) {
-        boolean result = userService.deleteById(id);
+    public BaseResponse<Boolean> delete(UserDeleteRO userDeleteRO) {
+        UserDeleteDTO userDeleteDTO = new UserDeleteDTO();
+        BeanUtils.copyProperties(userDeleteRO, userDeleteDTO);
+        boolean result = userService.deleteById(userDeleteDTO);
         return ResponseUtils.success(result);
     }
 

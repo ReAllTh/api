@@ -2,22 +2,13 @@ package link.reallth.api.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import link.reallth.api.annotation.RequireRole;
-import link.reallth.api.constant.enums.ROLES;
-import link.reallth.api.model.dto.UserFindDTO;
-import link.reallth.api.model.dto.UserSignInDTO;
-import link.reallth.api.model.dto.UserSignUpDTO;
-import link.reallth.api.model.dto.UserUpdateDTO;
+import link.reallth.api.model.dto.user.*;
 import link.reallth.api.model.po.User;
 import link.reallth.api.model.vo.UserVO;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-
-import static link.reallth.api.constant.ValidateConst.INVALID_MSG_ID;
 
 /**
  * UserService
@@ -58,10 +49,10 @@ public interface UserService extends IService<User> {
     /**
      * user delete
      *
-     * @param id user delete data transfer object
+     * @param userDeleteDTO user delete data transfer object
      * @return result
      */
-    boolean deleteById(@NotBlank @Length(min = 32, max = 32, message = INVALID_MSG_ID) String id);
+    boolean deleteById(UserDeleteDTO userDeleteDTO);
 
     /**
      * user find

@@ -1,4 +1,4 @@
-package link.reallth.api.model.ro;
+package link.reallth.api.model.ro.user;
 
 import jakarta.validation.constraints.*;
 import link.reallth.api.constant.enums.ROLES;

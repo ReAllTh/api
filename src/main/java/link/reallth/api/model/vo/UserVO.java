@@ -20,8 +20,6 @@ public class UserVO implements Serializable {
     private String nickname;
     private String avatar;
     private ROLES role;
-    private String accessKey;
-    private String secretKey;
     private Date createTime;
 
     @Serial

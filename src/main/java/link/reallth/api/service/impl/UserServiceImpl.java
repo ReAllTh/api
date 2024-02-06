@@ -10,15 +10,13 @@ import link.reallth.api.constant.enums.CODES;
 import link.reallth.api.constant.enums.ROLES;
 import link.reallth.api.exception.BaseException;
 import link.reallth.api.mapper.UserMapper;
-import link.reallth.api.model.dto.UserFindDTO;
-import link.reallth.api.model.dto.UserSignInDTO;
-import link.reallth.api.model.dto.UserSignUpDTO;
-import link.reallth.api.model.dto.UserUpdateDTO;
+import link.reallth.api.model.dto.user.*;
 import link.reallth.api.model.po.User;
 import link.reallth.api.model.vo.UserVO;
 import link.reallth.api.service.UserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -62,7 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return new user
      */
     @Override
-    public UserVO signUp(UserSignUpDTO userSignUpDTO) {
+    public UserVO signUp(@NotNull UserSignUpDTO userSignUpDTO) {
         QueryWrapper<User> qw = new QueryWrapper<>();
         // check username exist
         String username = userSignUpDTO.getUsername();
@@ -139,13 +137,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     /**
      * user delete
      *
-     * @param id user delete data transfer object
+     * @param userDeleteDTO user delete data transfer object
      * @return result
      */
-
     @Override
     @RequireRole(role = ROLES.ADMIN)
-    public boolean deleteById(String id) {
+    public boolean deleteById(@NotNull UserDeleteDTO userDeleteDTO) {
+        String id = userDeleteDTO.getId();
         QueryWrapper<User> qw = new QueryWrapper<>();
         // check user exist
         if (!this.exists(qw.eq(COLUMN_USER_ID, id)))
@@ -164,7 +162,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     @RequireRole
-    public List<UserVO> find(UserFindDTO userFindDTO) {
+    public List<UserVO> find(@NotNull UserFindDTO userFindDTO) {
         // check if id supplied
         String id = userFindDTO.getId();
         if (StringUtils.isNotBlank(id)) {
@@ -203,7 +201,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     @RequireRole
-    public UserVO update(UserUpdateDTO userUpdateDTO) {
+    public UserVO update(@NotNull UserUpdateDTO userUpdateDTO) {
         // if target user exist
         if (this.getById(userUpdateDTO.getId()) == null)
             throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
@@ -224,6 +222,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @param user source user
      * @return target user vo
      */
+    @NotNull
     private UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
@@ -236,6 +235,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      *
      * @return requestAttributes
      */
+    @NotNull
     private RequestAttributes getRequestAttributes() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null)
