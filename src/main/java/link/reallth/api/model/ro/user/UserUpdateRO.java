@@ -27,7 +27,7 @@ public class UserUpdateRO {
     @Length(min = 2, max = 16)
     private String nickname;
 
-    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_PASSWORD)
+    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_USER_PASSWORD)
     private String password;
 
     @URL(message = INVALID_MSG_URL)

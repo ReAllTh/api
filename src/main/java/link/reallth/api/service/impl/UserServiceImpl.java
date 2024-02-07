@@ -217,10 +217,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     /**
-     * get user vo
+     * get user view object
      *
      * @param user source user
-     * @return target user vo
+     * @return target user view object
      */
     @NotNull
     private UserVO getUserVO(User user) {

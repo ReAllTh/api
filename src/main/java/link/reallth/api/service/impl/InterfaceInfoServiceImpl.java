@@ -11,10 +11,12 @@ import link.reallth.api.constant.enums.STATUS;
 import link.reallth.api.exception.BaseException;
 import link.reallth.api.mapper.InterfaceInfoMapper;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoAddDTO;
+import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoDeleteDTO;
 import link.reallth.api.model.po.InterfaceInfo;
 import link.reallth.api.model.vo.InterfaceInfoVO;
 import link.reallth.api.service.InterfaceInfoService;
 import link.reallth.api.service.UserService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,6 @@ import static link.reallth.api.constant.ValidateConst.ERROR_MSG_DATABASE;
  * @author ReAllTh
  */
 @Service
-@RequireRole(role = ROLES.ADMIN)
 public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, InterfaceInfo>
         implements InterfaceInfoService {
 
@@ -35,8 +36,10 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
     private UserService userService;
     @Resource
     private ConversionService conversionService;
+    public static final String COLUMN_INTERFACE_ID = "id";
 
     public static final String COLUMN_INTERFACE_NAME = "name";
+    public static final String INVALID_MSG_NO_INTERFACE = "no such interface";
     public static final String INVALID_MSG_INTERFACE_EXIST = "interface already exist";
 
     /**
@@ -46,7 +49,8 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
      * @return interface info view object
      */
     @Override
-    public InterfaceInfoVO add(InterfaceInfoAddDTO interfaceInfoAddDTO) {
+    @RequireRole(role = ROLES.ADMIN)
+    public InterfaceInfoVO add(@NotNull InterfaceInfoAddDTO interfaceInfoAddDTO) {
         // check if interface already exist
         String name = interfaceInfoAddDTO.getName();
         if (this.exists(new QueryWrapper<InterfaceInfo>().eq(COLUMN_INTERFACE_NAME, name)))
@@ -63,6 +67,31 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         return this.getInterfaceVO(this.getById(interfaceInfo));
     }
 
+    /**
+     * interface delete
+     *
+     * @param interfaceInfoDeleteDTO interface info delete data transfer object
+     * @return result
+     */
+    @Override
+    @RequireRole(role = ROLES.ADMIN)
+    public boolean deleteById(@NotNull InterfaceInfoDeleteDTO interfaceInfoDeleteDTO) {
+        String id = interfaceInfoDeleteDTO.getId();
+        //  check if interface exist
+        if (!this.exists(new QueryWrapper<InterfaceInfo>().eq(COLUMN_INTERFACE_ID, id)))
+            throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_INTERFACE);
+        if (!this.removeById(id))
+            throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
+        return true;
+    }
+
+    /**
+     * get interface info view object
+     *
+     * @param interfaceInfo source interface info
+     * @return interface info view object
+     */
+    @NotNull
     private InterfaceInfoVO getInterfaceVO(InterfaceInfo interfaceInfo) {
         InterfaceInfoVO interfaceInfoVO = new InterfaceInfoVO();
         BeanUtils.copyProperties(interfaceInfo, interfaceInfoVO);

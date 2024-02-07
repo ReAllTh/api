@@ -24,7 +24,7 @@ public class UserSignUpDTO {
     private String nickname;
 
     @NotBlank
-    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_PASSWORD)
+    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_USER_PASSWORD)
     private String password;
 
     @URL(message = INVALID_MSG_URL)

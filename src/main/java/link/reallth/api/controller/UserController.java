@@ -86,7 +86,7 @@ public class UserController {
      * @return result
      */
     @PostMapping("delete")
-    public BaseResponse<Boolean> delete(UserDeleteRO userDeleteRO) {
+    public BaseResponse<Boolean> delete(@Valid UserDeleteRO userDeleteRO) {
         UserDeleteDTO userDeleteDTO = new UserDeleteDTO();
         BeanUtils.copyProperties(userDeleteRO, userDeleteDTO);
         boolean result = userService.deleteById(userDeleteDTO);

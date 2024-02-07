@@ -24,7 +24,7 @@ public class UserSignUpRO {
     private String nickname;
 
     @NotBlank(message = INVALID_MSG_PASSWORD_BLANK)
-    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_PASSWORD)
+    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_USER_PASSWORD)
     private String password;
 
     @URL(message = INVALID_MSG_URL)

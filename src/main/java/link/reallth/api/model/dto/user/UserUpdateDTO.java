@@ -24,10 +24,10 @@ public class UserUpdateDTO {
     @Pattern(regexp = REGEX_USERNAME, message = INVALID_MSG_USERNAME)
     private String username;
 
-    @Length(min = 2, max = 16)
+    @Length(min = 2, max = 16, message = INVALID_MSG_USER_NICKNAME)
     private String nickname;
 
-    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_PASSWORD)
+    @Pattern(regexp = REGEX_PASSWORD, message = INVALID_MSG_USER_PASSWORD)
     private String password;
 
     @URL(message = INVALID_MSG_URL)
