@@ -15,6 +15,7 @@ import link.reallth.api.mapper.InterfaceInfoMapper;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoAddDTO;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoDeleteDTO;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoFindDTO;
+import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoUpdateDTO;
 import link.reallth.api.model.po.InterfaceInfo;
 import link.reallth.api.model.vo.InterfaceInfoVO;
 import link.reallth.api.service.InterfaceInfoService;
@@ -122,6 +123,30 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         // paging
         IPage<InterfaceInfo> page = new Page<>(interfaceInfoFindDTO.getPage(), interfaceInfoFindDTO.getPageSize());
         return this.list(page, qw).stream().map(this::getInterfaceVO).toList();
+    }
+
+    /**
+     * interface update
+     *
+     * @param interfaceInfoUpdateDTO interface info update data transfer object
+     * @return new interface info view object
+     */
+    @Override
+    public InterfaceInfoVO update(InterfaceInfoUpdateDTO interfaceInfoUpdateDTO) {
+        InterfaceInfo interfaceInfo = new InterfaceInfo();
+        BeanUtils.copyProperties(interfaceInfoUpdateDTO, interfaceInfo);
+        // transfer filed that type mismatch
+        STATUS status = interfaceInfoUpdateDTO.getStatus();
+        if (status != null)
+            interfaceInfo.setStatus(status.getVal());
+        METHOD method = interfaceInfoUpdateDTO.getMethod();
+        if (method != null)
+            interfaceInfo.setMethod(method.getName());
+        // update
+        if (!this.updateById(interfaceInfo))
+            throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
+        InterfaceInfo newInterface = this.getById(interfaceInfo);
+        return this.getInterfaceVO(newInterface);
     }
 
     /**

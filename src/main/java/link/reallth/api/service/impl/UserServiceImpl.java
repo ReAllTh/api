@@ -207,7 +207,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
         User user = new User();
         BeanUtils.copyProperties(userUpdateDTO, user);
-        if (!this.update(user, new QueryWrapper<User>().eq(COLUMN_USER_ID, user.getId())))
+        if (!this.updateById(user))
             throw new BaseException(CODES.ERROR_SYSTEM, ERROR_MSG_DATABASE);
         UserVO newUserVO = this.getUserVO(this.getById(user.getId()));
         // update current if update self
