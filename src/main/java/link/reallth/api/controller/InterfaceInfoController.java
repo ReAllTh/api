@@ -5,8 +5,10 @@ import jakarta.validation.Valid;
 import link.reallth.api.common.BaseResponse;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoAddDTO;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoDeleteDTO;
+import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoFindDTO;
 import link.reallth.api.model.ro.interfaceinfo.InterfaceInfoAddRO;
 import link.reallth.api.model.ro.interfaceinfo.InterfaceInfoDeleteRO;
+import link.reallth.api.model.ro.interfaceinfo.InterfaceInfoFindRO;
 import link.reallth.api.model.vo.InterfaceInfoVO;
 import link.reallth.api.service.InterfaceInfoService;
 import link.reallth.api.utils.ResponseUtils;
@@ -15,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Validated
 @RestController
@@ -50,5 +54,19 @@ public class InterfaceInfoController {
         BeanUtils.copyProperties(interfaceInfoDeleteRO, interfaceInfoDeleteDTO);
         boolean result = interfaceInfoService.deleteById(interfaceInfoDeleteDTO);
         return ResponseUtils.success(result);
+    }
+
+    /**
+     * interface find
+     *
+     * @param interfaceInfoFindRO interface info find request object
+     * @return result list
+     */
+    @PostMapping("find")
+    public BaseResponse<List<InterfaceInfoVO>> find(@Valid InterfaceInfoFindRO interfaceInfoFindRO) {
+        InterfaceInfoFindDTO interfaceInfoFindDTO = new InterfaceInfoFindDTO();
+        BeanUtils.copyProperties(interfaceInfoFindRO, interfaceInfoFindDTO);
+        List<InterfaceInfoVO> interfaceInfoVOS = interfaceInfoService.find(interfaceInfoFindDTO);
+        return ResponseUtils.success(interfaceInfoVOS);
     }
 }

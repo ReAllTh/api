@@ -5,9 +5,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoAddDTO;
 import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoDeleteDTO;
+import link.reallth.api.model.dto.interfaceinfo.InterfaceInfoFindDTO;
 import link.reallth.api.model.po.InterfaceInfo;
 import link.reallth.api.model.vo.InterfaceInfoVO;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 /**
  * InterfaceInfoService
@@ -32,4 +35,12 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * @return result
      */
     boolean deleteById(@Valid @NotNull InterfaceInfoDeleteDTO interfaceInfoDeleteDTO);
+
+    /**
+     * interface find
+     *
+     * @param interfaceInfoFindDTO interface info find data transfer object
+     * @return target interface
+     */
+    List<InterfaceInfoVO> find(@Valid @NotNull InterfaceInfoFindDTO interfaceInfoFindDTO);
 }
