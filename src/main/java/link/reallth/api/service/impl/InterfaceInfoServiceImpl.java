@@ -39,6 +39,12 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
     public static final String COLUMN_INTERFACE_NAME = "name";
     public static final String INVALID_MSG_INTERFACE_EXIST = "interface already exist";
 
+    /**
+     * interface add
+     *
+     * @param interfaceInfoAddDTO interface info add data transfer object
+     * @return interface info view object
+     */
     @Override
     public InterfaceInfoVO add(InterfaceInfoAddDTO interfaceInfoAddDTO) {
         // check if interface already exist
