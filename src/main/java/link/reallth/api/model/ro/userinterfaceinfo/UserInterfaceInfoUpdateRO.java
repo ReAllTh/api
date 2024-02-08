@@ -2,7 +2,6 @@ package link.reallth.api.model.ro.userinterfaceinfo;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import link.reallth.api.constant.enums.BANNED;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 @AllArgsConstructor
 public enum STATUS implements ConvertableEnum {
-    CLOSE(0),
-    OPEN(1);
+    OFFLINE(0),
+    ONLINE(1);
 
     private final Integer val;
 
