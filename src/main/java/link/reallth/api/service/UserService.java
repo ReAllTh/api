@@ -70,4 +70,11 @@ public interface UserService extends IService<User> {
      */
     UserVO update(@Valid @NotNull UserUpdateDTO userUpdateDTO);
 
+    /**
+     * get user view object
+     *
+     * @param user source user
+     * @return target user view object
+     */
+    UserVO getUserVO(User user);
 }

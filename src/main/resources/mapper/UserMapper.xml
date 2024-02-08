@@ -5,17 +5,17 @@
 <mapper namespace="link.reallth.api.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="link.reallth.api.model.po.User">
-            <id property="id" column="id" jdbcType="VARCHAR"/>
-            <result property="username" column="username" jdbcType="VARCHAR"/>
-            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
-            <result property="role" column="role" jdbcType="TINYINT"/>
-            <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="accessKey" column="access_key" jdbcType="VARCHAR"/>
-            <result property="secretKey" column="secret_key" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="role" column="role" jdbcType="TINYINT"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="accessKey" column="access_key" jdbcType="VARCHAR"/>
+        <result property="secretKey" column="secret_key" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

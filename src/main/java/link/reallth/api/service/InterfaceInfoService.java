@@ -52,4 +52,12 @@ public interface InterfaceInfoService extends IService<InterfaceInfo> {
      * @return new interface info view object
      */
     InterfaceInfoVO update(@Valid @NotNull InterfaceInfoUpdateDTO interfaceInfoUpdateDTO);
+
+    /**
+     * get interface info view object
+     *
+     * @param interfaceInfo source interface info
+     * @return interface info view object
+     */
+    InterfaceInfoVO getInterfaceVO(InterfaceInfo interfaceInfo);
 }

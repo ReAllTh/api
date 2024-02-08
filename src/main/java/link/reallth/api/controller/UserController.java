@@ -82,7 +82,7 @@ public class UserController {
     /**
      * user delete
      *
-     * @param id target user id
+     * @param userDeleteRO target user id
      * @return result
      */
     @PostMapping("delete")

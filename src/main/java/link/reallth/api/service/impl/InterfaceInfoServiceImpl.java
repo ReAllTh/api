@@ -26,6 +26,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static link.reallth.api.constant.ValidateConst.ERROR_MSG_DATABASE;
@@ -107,7 +108,7 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
         if (StringUtils.isNotBlank(id)) {
             InterfaceInfo targetInfo = this.getById(id);
             if (targetInfo == null)
-                throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_INTERFACE);
+                return Collections.emptyList();
             return List.of(this.getInterfaceVO(targetInfo));
         }
         // combination find
@@ -156,7 +157,7 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
      * @return interface info view object
      */
     @NotNull
-    private InterfaceInfoVO getInterfaceVO(InterfaceInfo interfaceInfo) {
+    public InterfaceInfoVO getInterfaceVO(InterfaceInfo interfaceInfo) {
         InterfaceInfoVO interfaceInfoVO = new InterfaceInfoVO();
         BeanUtils.copyProperties(interfaceInfo, interfaceInfoVO);
         interfaceInfoVO.setStatus(conversionService.convert(interfaceInfo.getStatus(), STATUS.class));

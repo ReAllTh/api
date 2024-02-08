@@ -6,14 +6,15 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * interface method
+ * user interface banned enum
  *
  * @author ReAllTh
  */
 @Getter
 @AllArgsConstructor
-public enum METHOD implements ConvertableEnum {
-    GET(0), POST(1), PUT(2), DELETE(3);
+public enum BANNED implements ConvertableEnum {
+    WORKING(0),
+    BAN(1);
 
     private final Integer val;
 

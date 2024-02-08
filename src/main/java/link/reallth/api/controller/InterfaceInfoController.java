@@ -73,7 +73,6 @@ public class InterfaceInfoController {
         return ResponseUtils.success(interfaceInfoVOS);
     }
 
-
     /**
      * interface update
      *

@@ -41,13 +41,12 @@ create table if not exists interface_info
 -- interface user relation table
 create table if not exists user_interface_info
 (
-    id               varchar(64)                        not null primary key,
-    user_id          varchar(64)                        not null,
-    interfaceInfo_id varchar(64)                        not null,
-    total_num        int      default 0                 not null comment 'total call',
-    left_num         int      default 0                 not null comment 'remain call',
-    status           int      default 0                 not null comment 'status: - 0 working - 1 ban',
-    create_time      datetime default CURRENT_TIMESTAMP not null,
-    update_time      datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
-    deleted          tinyint  default 0                 not null
+    id           varchar(64)                        not null primary key,
+    user_id      varchar(64)                        not null,
+    interface_id varchar(64)                        not null,
+    left_num     int      default 0                 not null comment 'remain call',
+    status       int      default 0                 not null comment 'status: - 0 working - 1 ban',
+    create_time  datetime default CURRENT_TIMESTAMP not null,
+    update_time  datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP,
+    deleted      tinyint  default 0                 not null
 ) comment 'user interface relation';

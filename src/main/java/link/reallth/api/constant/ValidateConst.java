@@ -27,6 +27,7 @@ public class ValidateConst {
     public static final String INVALID_MSG_INTERFACE_RESP_HDR = "responseHeader too lang";
     public static final String ERROR_MSG_DATABASE = "failed on database";
     public static final String INVALID_MSG_INTERFACE_SEARCH_TEXT = "sear text too long";
+    public static final String INVALID_MSG_INTERFACE_LEFT_NUM = "left call num must be positive";
 
     private ValidateConst() {
     }

@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -168,7 +169,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (StringUtils.isNotBlank(id)) {
             User targetUser = this.getById(id);
             if (targetUser == null)
-                throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_NO_USER);
+                return Collections.emptyList();
             return List.of(this.getUserVO(targetUser));
         }
         QueryWrapper<User> qw = new QueryWrapper<>();
@@ -223,7 +224,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @return target user view object
      */
     @NotNull
-    private UserVO getUserVO(User user) {
+    public UserVO getUserVO(User user) {
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
         userVO.setRole(converter.convert(user.getRole(), ROLES.class));

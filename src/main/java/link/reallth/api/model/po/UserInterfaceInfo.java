@@ -20,12 +20,7 @@ public class UserInterfaceInfo implements Serializable {
     @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     private String userId;
-    private String interfaceinfoId;
-
-    /**
-     * total call
-     */
-    private Integer totalNum;
+    private String interfaceId;
 
     /**
      * remain call
@@ -35,7 +30,8 @@ public class UserInterfaceInfo implements Serializable {
     /**
      * status: - 0 working - 1 ban
      */
-    private Integer status;
+    @TableField(value = "status")
+    private Integer banned;
     private Date createTime;
     private Date updateTime;
     private Integer deleted;
