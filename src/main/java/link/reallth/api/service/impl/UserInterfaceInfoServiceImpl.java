@@ -30,6 +30,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+import static link.reallth.api.constant.ColumnConst.COLUMN_INTERFACE_ID;
+import static link.reallth.api.constant.ColumnConst.COLUMN_USER_ID;
 import static link.reallth.api.constant.ValidateConst.ERROR_MSG_DATABASE;
 
 /**
@@ -40,9 +42,6 @@ import static link.reallth.api.constant.ValidateConst.ERROR_MSG_DATABASE;
 @Service
 public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoMapper, UserInterfaceInfo>
         implements UserInterfaceInfoService {
-
-    public static final String COLUMN_USER_INTERFACE_USER_ID = "user_id";
-    public static final String COLUMN_USER_INTERFACE_INTERFACE_ID = "interface_id";
     public static final String INVALID_MSG_USER_INTERFACE_EXIST = "user interface already exist";
     public static final String INVALID_MSG_NO_USER_INTERFACE = "no such user interface";
     public static final String COLUMN_USER_INTERFACE_ID = "id";
@@ -65,8 +64,8 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     public UserInterfaceInfoVO add(@NotNull UserInterfaceInfoAddDTO userInterfaceInfoAddDTO) {
         // check if already exist
         QueryWrapper<UserInterfaceInfo> qw = new QueryWrapper<UserInterfaceInfo>()
-                .eq(COLUMN_USER_INTERFACE_USER_ID, userInterfaceInfoAddDTO.getUserId())
-                .eq(COLUMN_USER_INTERFACE_INTERFACE_ID, userInterfaceInfoAddDTO.getInterfaceId());
+                .eq(COLUMN_USER_ID, userInterfaceInfoAddDTO.getUserId())
+                .eq(COLUMN_INTERFACE_ID, userInterfaceInfoAddDTO.getInterfaceId());
         if (this.exists(qw))
             throw new BaseException(CODES.ERROR_PARAM, INVALID_MSG_USER_INTERFACE_EXIST);
         // generate new user interface
@@ -119,10 +118,10 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
         QueryWrapper<UserInterfaceInfo> qw = new QueryWrapper<>();
         String interfaceId = userInterfaceInfoFindDTO.getInterfaceId();
         if (StringUtils.isNotBlank(interfaceId))
-            qw.eq(COLUMN_USER_INTERFACE_INTERFACE_ID, interfaceId);
+            qw.eq(COLUMN_INTERFACE_ID, interfaceId);
         String userId = userInterfaceInfoFindDTO.getUserId();
         if (StringUtils.isNotBlank(userId))
-            qw.eq(COLUMN_USER_INTERFACE_USER_ID, userId);
+            qw.eq(COLUMN_USER_ID, userId);
         Integer leftNumLeast = userInterfaceInfoFindDTO.getLeftNumLeast();
         if (leftNumLeast != null)
             qw.ge(COLUMN_USER_INTERFACE_LEFT_NUM, leftNumLeast);

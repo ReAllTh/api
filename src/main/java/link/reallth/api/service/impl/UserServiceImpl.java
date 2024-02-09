@@ -32,6 +32,7 @@ import java.util.List;
 import static link.reallth.api.constant.AttributeConst.ATTR_CURRENT_USER;
 import static link.reallth.api.constant.AttributeConst.INVALID_MSG_REQ_ATTR;
 import static link.reallth.api.constant.ValidateConst.ERROR_MSG_DATABASE;
+import static link.reallth.api.constant.ValidateConst.INVALID_MSG_NO_USER;
 
 /**
  * UserServiceImpl
@@ -51,7 +52,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public static final String COLUMN_USER_USERNAME = "username";
     public static final String INVALID_MSG_DUP_USERNAME = "username already exist";
     public static final String INVALID_MSG_SIGNED_IN = "already signed in";
-    public static final String INVALID_MSG_NO_USER = "no such user";
     public static final String INVALID_MSG_PASSWORD = "username or password mismatched";
 
     /**
